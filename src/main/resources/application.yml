@@ -1,7 +1,7 @@
 
 spring:
   datasource:
-    url: jdbc:h2:tcp://localhost/~/jpashop;MVCC=TRUE
+    url: jdbc:h2:tcp://localhost/~/jpashop
     username: sa
     password:
     driver-class-name: org.h2.Driver
@@ -10,16 +10,18 @@ spring:
     hibernate:
       ddl-auto: create  # Application 실행 시점에 내가 가지고 있는 테이블을 지우고 다시 생성한다.
     properties:
-#      show-sql: true
-      format_sql: true
+      hibernate:
+#       show-sql: true
+        format_sql: true
 
 
 logging:
   level:
     org.hibernate.SQL: debug
+    org.hibernate.type: trace
 
 
-
-show_sql 과 logging 의 차이
-Sysout 과  Logger를 통해 보여준다.
-운영환경에서 Sysout으로 찍으면 안되고 Logger를 통해서다
+#;MVCC=TRUE 옵션은 H2.1.4.198 버전부터 제거 되었다.
+#show_sql 과 logging 의 차이
+#Sysout 과  Logger를 통해 보여준다.
+#운영환경에서 Sysout으로 찍으면 안되고 Logger를 통해서다

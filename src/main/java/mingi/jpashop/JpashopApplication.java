@@ -1,13 +1,40 @@
 package mingi.jpashop;
 
-import org.springframework.boot.SpringApplication;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
+import mingi.jpashop.domain.Order;
+import mingi.jpashop.domain.OrderItem;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class JpashopApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(JpashopApplication.class, args);
-    }
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
+        EntityManager em = emf.createEntityManager();
 
+        EntityTransaction tx = em.getTransaction();
+
+        tx.begin();
+
+        try {
+            Order order = new Order();
+            em.persist(order);
+
+            OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(order);
+
+            em.persist(orderItem);
+
+            tx.commit();
+        } catch (Exception e) {
+            tx.rollback();
+        } finally {
+            em.close();
+        }
+
+        emf.close();
+    }
 }

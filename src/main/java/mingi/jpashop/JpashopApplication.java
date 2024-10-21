@@ -4,15 +4,14 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
-import mingi.jpashop.domain.Order;
-import mingi.jpashop.domain.OrderItem;
+import mingi.jpashop.domain.Book;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class JpashopApplication {
 
     public static void main(String[] args) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpashop");
         EntityManager em = emf.createEntityManager();
 
         EntityTransaction tx = em.getTransaction();
@@ -20,13 +19,11 @@ public class JpashopApplication {
         tx.begin();
 
         try {
-            Order order = new Order();
-            em.persist(order);
+            Book book = new Book();
+            book.setName("JPA");
+            book.setAuthor("JPAShop");
 
-            OrderItem orderItem = new OrderItem();
-            orderItem.setOrder(order);
-
-            em.persist(orderItem);
+            em.persist(book);
 
             tx.commit();
         } catch (Exception e) {
